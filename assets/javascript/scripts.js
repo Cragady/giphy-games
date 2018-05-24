@@ -8,6 +8,17 @@ var topics = ["Dark Souls", "Kingdom Hearts", "Super Smash Brothers", "Metroid",
 var topReq;
 //var topReq = $(this).attr("id");
 
+function newTopic(){
+    $("#add-new-game").click(function(){
+        event.preventDefault();
+        userInput = $("#new-game").val();
+        if(!topics.includes(userInput)){
+            topics.push(userInput);
+            btnLayout();
+        }
+    });
+};
+
 function gifyGo(){
     $("img").click(function(){
         statusGetter = $(this).attr("play-status");
@@ -28,6 +39,7 @@ function clicketyClack(){
     $("button").click(function(){
         topReq = $(this).text();
         var topicUrl = "https://api.giphy.com/v1/gifs/search?q=" + topReq + "&api_key=GhK5NbgIlLn6AVToOnwOLl3clsoaBEdR&limit=10";
+        $("#gifs-galore").empty();
         $.ajax({
             url: topicUrl,
             method: "GET"
@@ -40,12 +52,15 @@ function clicketyClack(){
             for (i = 0; i < response.data.length; i ++){
                 gifUrl = response.data[i].images.original_still.url;
                 newGif = $("<img>");
+                newDiv = $("<div>");
                 newGif.attr("src", gifUrl);
                 newGif.attr("alt", topReq);
                 newGif.attr("play-status", "still");
                 newGif.attr("still-url", gifUrl);
                 newGif.attr("moved-url", response.data[i].images.original.url);
-                $("#gifs-galore").prepend(newGif);
+                newDiv.prepend(newGif);
+                newDiv.prepend($("<p>").text(response.data[i].rating));
+                $("#gifs-galore").prepend(newDiv);
             }
             gifyGo();
         }); 
@@ -53,16 +68,18 @@ function clicketyClack(){
 };
 
 function btnLayout(){
+    $("#buttons-galore").empty();
     for (i = 0; i < topics.length; i++){
         newBtn = $("<button>");
         newBtn.text(topics[i]);
         newBtn.attr("id", ("topics-" + (i + 1)));
         $("#buttons-galore").append(newBtn);
     };
+    clicketyClack();
 };
 
 $(document).ready(function(){
     btnLayout();
-    clicketyClack();
+    newTopic();
 });
 
