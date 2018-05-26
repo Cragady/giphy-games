@@ -6,7 +6,9 @@ a custom bar where a user can create a button for a game they want to see gifs
 of and have the button appended and created*/
 var topics = ["Dark Souls", "Kingdom Hearts", "Super Smash Brothers", "Metroid", "Final Fantasy", "Gravity Rush", "Persona 4", "Persona 3", "The Legend of Zelda", "Paper Mario", "Longboarding", "Biking", "Anime", "Walking"];
 var topReq;
-//var topReq = $(this).attr("id");
+var filtered = false;
+var ratingLevel = ["g", "pg", "pg-13", "r"];
+var workingGifObj;
 
 function newTopic(){
     $("#add-new-game").click(function(){
@@ -49,19 +51,29 @@ function clicketyClack(){
             var q = 3;
             console.log(response.data[q]);
             console.log(response.data.length);
+            delete response.data[9];
+            response.data.length = 9;
+            console.log(response);
             for (i = 0; i < response.data.length; i ++){
                 gifUrl = response.data[i].images.original_still.url;
                 newGif = $("<img>");
                 newDiv = $("<div>");
-                newGif.attr("src", gifUrl);
-                newGif.attr("alt", topReq);
-                newGif.attr("play-status", "still");
-                newGif.attr("still-url", gifUrl);
-                newGif.attr("moved-url", response.data[i].images.original.url);
+                // newGif.attr("src", gifUrl);
+                // newGif.attr("alt", topReq);
+                // newGif.attr("play-status", "still");
+                // newGif.attr("still-url", gifUrl);
+                // newGif.attr("moved-url", response.data[i].images.original.url);
+                newGif.attr({src: gifUrl, 
+                    alt: topReq, 
+                    "play-status": "still", 
+                    "still-url": gifUrl, 
+                    "moved-url": response.data[i].images.original.url})
                 newDiv.prepend(newGif);
                 newDiv.prepend($("<p>").text(response.data[i].rating));
+                newDiv.attr("class", "col pdiv-resize");
                 $("#gifs-galore").prepend(newDiv);
             }
+            workingGifObj = response;
             gifyGo();
         }); 
     });
