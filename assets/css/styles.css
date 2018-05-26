@@ -2,15 +2,6 @@ html, body{
     height: 100%;
 }
 
-.cust-mw-100{
-    width: 100%;
-}
-
-.pdiv-resize{
-    min-width: 100%;;
-    min-height: auto;
-}
-
 #wrap{
     min-height: 100%;
 }
