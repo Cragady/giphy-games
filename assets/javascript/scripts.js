@@ -1,17 +1,24 @@
 var topics = ["Dark Souls", "Kingdom Hearts", "Super Smash Brothers", "Metroid", "Final Fantasy", "Gravity Rush", "Persona 4", "Persona 3", "The Legend of Zelda", "Paper Mario", "Longboarding", "Biking", "Anime", "Walking"];
+var topicsChecker = [];
 var topReq;
 var filtered = false;
 var ratingLevel = ["g", "pg", "pg-13", "r"];
-var workingGifObj;
 
 function newTopic(){
     $("#add-new-game").click(function(){
         event.preventDefault();
-        userInput = $("#new-game").val();
-        if(!topics.includes(userInput)){
+        userInput = $("#new-game").val().toString();
+        toLower();
+        if(!topicsChecker.includes(userInput)){
             topics.push(userInput);
             btnLayout();
         }
+    });
+};
+
+function toLower(){
+    $.each(topics, function(index){
+        topicsChecker[index] = topics[index].toLowerCase(); 
     });
 };
 
@@ -40,14 +47,8 @@ function clicketyClack(){
             url: topicUrl,
             method: "GET"
         }).then(function(response){
-            console.log(response);
-            console.log(response.data["2"]);
-            var q = 3;
-            console.log(response.data[q]);
-            console.log(response.data.length);
             // delete response.data[9]; these two lines i'm intentionally leaving in for future reference for me
             // response.data.length--;
-            console.log(response);
             for (i = 0; i < response.data.length; i ++){
                 gifUrl = response.data[i].images.original_still.url;
                 newGif = $("<img>");
@@ -62,7 +63,6 @@ function clicketyClack(){
                 newDiv.attr("class", "col col-6 col-md mx-auto p-2 border border-info");
                 $("#gifs-galore").prepend(newDiv);
             }
-            workingGifObj = response;
             gifyGo();
         }); 
     });
