@@ -9,7 +9,7 @@ The user clicks on a button, which sends them gifs according to how the button i
 
 **newTopic**<hr>
 
-The `newTopic` function is what allows the user to add a new button with a new topic. It has an if statement that prevents a new button from being added if it is already an available topic. The weakness this function has is that it doesn't prevent a topic being put in if it is spelled incorrectly or differently. New topic calls `toLower` which puts the entire topics array into the `topicsChecker` array, which then checks it against userInput. 
+The `newTopic` function is what allows the user to add a new button with a new topic. It has an if statement that prevents a new button from being added if it is already an available topic. The weakness this function has is that it doesn't prevent a topic being put in if it is spelled incorrectly or differently. New topic calls `toLower` which puts the entire topics array into the `topicsChecker` array, which then checks it against `usInCheck`. 
 
 `newTopic` is called in the `$(document).ready` function.
 

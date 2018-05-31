@@ -1,15 +1,14 @@
 var topics = ["Dark Souls", "Kingdom Hearts", "Super Smash Brothers", "Metroid", "Final Fantasy", "Gravity Rush", "Persona 4", "Persona 3", "The Legend of Zelda", "Paper Mario", "Longboarding", "Biking", "Anime", "Walking"];
 var topicsChecker = [];
 var topReq;
-var filtered = false;
-var ratingLevel = ["g", "pg", "pg-13", "r"];
 
 function newTopic(){
     $("#add-new-game").click(function(){
         event.preventDefault();
         userInput = $("#new-game").val().toString();
+        usInCheck = userInput.toLowerCase();
         toLower();
-        if(!topicsChecker.includes(userInput)){
+        if(!topicsChecker.includes(usInCheck)){
             topics.push(userInput);
             btnLayout();
         }
